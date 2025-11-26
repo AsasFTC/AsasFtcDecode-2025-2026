@@ -27,18 +27,11 @@ public class OutTake {
         return flywheel.getVelocity();
     }
 
-    public void dpadControl(boolean currentDpadUp, boolean currentDpadDown, boolean lastDpadUp, boolean lastDpadDown){
-        double flywheelPower = 0;
-        if (currentDpadUp && !lastDpadUp){
-            flywheelPower += 0.01;
-        }
-        lastDpadUp = currentDpadUp;
-
-        if (currentDpadDown && !lastDpadDown){
-            flywheelPower -= 0.01;
-        }
-        lastDpadDown = currentDpadDown;
-        flywheel.setPower(flywheelPower);
+    public void setPower(double power){
+        flywheel.setPower(power);
+    }
+    public void setVelocity(int velocity){
+        flywheel.setVelocity(velocity);
     }
 
     public void turnOff(){
@@ -46,7 +39,7 @@ public class OutTake {
     }
 
     public void setDefaultPower(){
-        flywheel.setPower(0.6);
+        flywheel.setPower(0.8);
     }
 
 

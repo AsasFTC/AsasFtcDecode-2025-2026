@@ -20,7 +20,7 @@ public class TwoMotorsDrive {
         motorLeft = (DcMotorEx) hwmap.get(DcMotor.class, "leftDrive");
         motorRight = (DcMotorEx) hwmap.get(DcMotor.class, "rightDrive");
 
-        motorRight.setDirection(DcMotorSimple.Direction.REVERSE);
+        motorLeft.setDirection(DcMotorSimple.Direction.REVERSE);
 
         motorLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         motorRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -39,6 +39,12 @@ public class TwoMotorsDrive {
         currents.add(motorLeft.getCurrent(CurrentUnit.AMPS));
         currents.add(motorRight.getCurrent(CurrentUnit.AMPS));
         return currents.toString();
+    }
+    public List<Double> getPowers(){
+        List<Double> powers = new ArrayList<>();
+        powers.add(motorLeft.getPower());
+        powers.add(motorRight.getPower());
+        return powers;
     }
 
     public void arcadeDrive(double forward, double right){
