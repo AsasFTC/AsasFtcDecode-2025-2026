@@ -25,7 +25,18 @@ public class TwoMotorsDrive {
         motorLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         motorRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
-
+    public void setMotorDirections(DcMotorSimple.Direction lDirection, DcMotorSimple.Direction rDirection){
+        motorLeft.setDirection(lDirection);
+        motorRight.setDirection(rDirection);
+    }
+    public void setMotorModes(DcMotor.RunMode lMode, DcMotor.RunMode rMode){
+        motorLeft.setMode(lMode);
+        motorRight.setMode(rMode);
+    }
+    public void setTargetPositions(int lTarget, int rTarget) {
+        motorLeft.setTargetPosition(lTarget);
+        motorRight.setTargetPosition(rTarget);
+    }
     public void setPowers(double lPower, double rPower){
         motorLeft.setPower(lPower);
         motorRight.setPower(rPower);
@@ -48,7 +59,22 @@ public class TwoMotorsDrive {
     }
 
     public void arcadeDrive(double forward, double right){
-        motorLeft.setPower(forward + right);
-        motorRight.setPower(forward - right);
+        motorLeft.setPower(forward - right);
+        motorRight.setPower(forward + right);
     }
+
+    public List<Integer> getPositions(){
+        List<Integer> positions = new ArrayList<>();
+        positions.add(motorLeft.getCurrentPosition());
+        positions.add(motorRight.getCurrentPosition());
+        return positions;
+    }
+
+    public boolean rightMotorIsBusy(){
+        return motorRight.isBusy();
+    }
+    public boolean leftMotorIsBusy(){
+        return motorLeft.isBusy();
+    }
+
 }

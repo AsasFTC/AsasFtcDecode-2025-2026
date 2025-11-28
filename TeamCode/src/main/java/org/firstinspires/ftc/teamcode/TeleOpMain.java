@@ -30,6 +30,11 @@ public class TeleOpMain extends OpMode {
 
     boolean currentDpadDown;
     double flywheelPower;
+    double coreHexPower;
+    double coreHex2Power;
+    boolean isOuttakeLocked = false;
+    double lockedOuttakePower = 0;
+
 
     @Override
     public void init(){
@@ -47,23 +52,19 @@ public class TeleOpMain extends OpMode {
 
         cam = new WebCam();
         cam.init(hardwareMap);
-
-
     }
 
     @Override
     public void loop(){
-
-        //Controle por gamepad
         drive.arcadeDrive(gamepad1.left_stick_y, gamepad1.left_stick_x);
-        inTake.setCoreHexPowers(gamepad1.right_trigger, -gamepad1.left_trigger);
+
+
+        inTake.setCoreHexPowers(coreHexPower, -coreHex2Power);
+
         dpadControl();
-        if (gamepad1.left_bumper){
-            outTake.turnOff();
-        }
-        if (gamepad1.right_bumper){
-            outTake.setDefaultPower();
-        }
+        outTakeTriggerControl();
+        coreHexBumperControl();
+
         if (gamepad1.a) {
             autoShoot();
         }
@@ -107,11 +108,13 @@ public class TeleOpMain extends OpMode {
     public void autoShoot(){
         double flywheelVelocity = 0;
         double distance = cam.getTagDistanceCentimeters();
-        if (cam.getTagId() == 20){
+        while (cam.getTagId() == 20){
             telemetry.addLine("Calculando velocidade...");
-            flywheelVelocity = Math.pow(distance, 1.16) + distance + 1125 + 45*Math.sin(((double) 1 /13)*distance + 8);
+            flywheelVelocity = Math.pow(distance, 1.16) + distance + 1080 + 45*Math.sin(((double) 1 /13)*distance + 8);
             telemetry.addData("Velocidade Calculada", flywheelVelocity);
-            outTake.setVelocity((int) flywheelVelocity);
+            if (flywheelVelocity <= 2340) {
+                outTake.setVelocity((int) flywheelVelocity);
+            }
             telemetry.addData("Velocidade da flywheel", outTake.getVelocity());
 
             if (gamepad1.a){
@@ -121,7 +124,33 @@ public class TeleOpMain extends OpMode {
         }
         return;
     }
+    public void outTakeTriggerControl(){
+        if (gamepad1.b) {
+            isOuttakeLocked = true;
+            lockedOuttakePower = gamepad1.right_trigger;
+        }
 
+
+        if (gamepad1.x) {
+            isOuttakeLocked = false;
+        }
+
+        double outtakePower;
+
+        if (isOuttakeLocked) {
+            outtakePower = lockedOuttakePower;
+        } else {
+            outtakePower = gamepad1.right_trigger;
+        }
+
+        outTake.setPower(outtakePower);
+    }
+    public void coreHexBumperControl(){
+        if (gamepad1.right_bumper){ coreHexPower = 0.9;} else {coreHexPower = 0;}
+        if (gamepad1.left_bumper){ coreHex2Power = 0.9;} else {coreHex2Power = 0;}
+
+
+    }
 
 
 }
