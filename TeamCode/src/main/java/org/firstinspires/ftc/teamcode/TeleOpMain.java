@@ -59,7 +59,15 @@ public class TeleOpMain extends OpMode {
 
     @Override
     public void loop(){
-        drive.arcadeDrive(gamepad1.left_stick_y * direction, gamepad1.left_stick_x * direction);
+        if (gamepad1.dpad_right) {
+            direction = 1;
+        }
+        else if (gamepad1.dpad_left) {
+            direction = -1;
+        } else {direction = 1;}
+
+
+        drive.arcadeDrive(gamepad1.left_stick_y * direction, gamepad1.left_stick_x);
 
 
         inTake.setCoreHexPowers(coreHexPower, -coreHex2Power);
@@ -71,12 +79,7 @@ public class TeleOpMain extends OpMode {
         if (gamepad1.a) {
             autoShoot();
         }
-        if (gamepad1.dpad_right) {
-            direction = 1;
-        }
-        if (gamepad1.dpad_left) {
-            direction = -1;
-        }
+
 
         //Telemetria
 
