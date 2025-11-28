@@ -42,8 +42,9 @@ public class WebCam {
 
         if (!detections.isEmpty()) {
             for (AprilTagDetection tag : detections) {
-                return tag.ftcPose.range * 2.54;
-
+                if(tag != null) {
+                    return tag.ftcPose.range * 2.54;
+                }
             }
         } else {
             return Double.NaN;

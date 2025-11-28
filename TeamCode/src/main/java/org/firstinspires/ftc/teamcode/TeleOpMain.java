@@ -64,7 +64,7 @@ public class TeleOpMain extends OpMode {
         }
         else if (gamepad1.dpad_left) {
             direction = -1;
-        } else {direction = 1;}
+        }
 
 
         drive.arcadeDrive(gamepad1.left_stick_y * direction, gamepad1.left_stick_x);
@@ -148,15 +148,14 @@ public class TeleOpMain extends OpMode {
             isOuttakeLocked = false;
         }
 
-        double outtakePower;
 
         if (isOuttakeLocked) {
-            outtakePower = lockedOuttakePower;
+            flywheelPower = lockedOuttakePower;
         } else {
-            outtakePower = gamepad1.right_trigger;
+            flywheelPower = gamepad1.right_trigger;
         }
 
-        outTake.setPower(outtakePower);
+        outTake.setPower(flywheelPower);
     }
     public void coreHexBumperControl(){
         if (gamepad1.right_bumper){ coreHexPower = 0.9;} else {coreHexPower = 0;}
