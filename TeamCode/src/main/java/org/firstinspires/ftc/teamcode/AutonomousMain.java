@@ -54,8 +54,11 @@ public class AutonomousMain extends LinearOpMode {
         telemetry.addLine("Rodando...");
         telemetry.update();
 
+        //Início do processo
 
-        moveForward(130);
+        rotate(360);
+        moveForward(50);
+
 
 
         while (opModeIsActive()) {
@@ -155,7 +158,7 @@ public class AutonomousMain extends LinearOpMode {
     private static int getTargetPulses(double angleDeg) {
         double wheelDiameter = 9.0;
         double cpr = 560;
-        double trackWidth = 30.0;
+        double trackWidth = 37.0;
 
         double wheelCircumference = Math.PI * wheelDiameter;
 

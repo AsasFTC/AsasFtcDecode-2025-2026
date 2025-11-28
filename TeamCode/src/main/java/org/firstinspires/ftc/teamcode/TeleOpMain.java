@@ -34,6 +34,7 @@ public class TeleOpMain extends OpMode {
     double coreHex2Power;
     boolean isOuttakeLocked = false;
     double lockedOuttakePower = 0;
+    int direction;
 
 
     @Override
@@ -52,11 +53,13 @@ public class TeleOpMain extends OpMode {
 
         cam = new WebCam();
         cam.init(hardwareMap);
+
+        int direction = 1;
     }
 
     @Override
     public void loop(){
-        drive.arcadeDrive(gamepad1.left_stick_y, gamepad1.left_stick_x);
+        drive.arcadeDrive(gamepad1.left_stick_y * direction, gamepad1.left_stick_x * direction);
 
 
         inTake.setCoreHexPowers(coreHexPower, -coreHex2Power);
@@ -68,11 +71,18 @@ public class TeleOpMain extends OpMode {
         if (gamepad1.a) {
             autoShoot();
         }
+        if (gamepad1.dpad_right) {
+            direction = 1;
+        }
+        if (gamepad1.dpad_left) {
+            direction = -1;
+        }
+
         //Telemetria
 
         //Movimento
         telemetry.addData("Corrente dos motores de movimento(Esquerdo/Direito)", drive.getCurrents());
-
+        telemetry.addData("Direction", direction == 1 ? "Intake Frente" : "Outtake Frente");
 
         //Out-take
         telemetry.addLine("-----------------------Out-take---------------------");
