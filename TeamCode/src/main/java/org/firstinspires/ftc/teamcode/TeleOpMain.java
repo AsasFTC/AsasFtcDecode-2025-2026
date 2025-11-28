@@ -54,7 +54,6 @@ public class TeleOpMain extends OpMode {
     @Override
     public void loop(){
 
-
         //Controle por gamepad
         drive.arcadeDrive(gamepad1.left_stick_y, gamepad1.left_stick_x);
         inTake.setCoreHexPowers(gamepad1.right_trigger, -gamepad1.left_trigger);
@@ -65,15 +64,9 @@ public class TeleOpMain extends OpMode {
         if (gamepad1.right_bumper){
             outTake.setDefaultPower();
         }
-        if (gamepad1.a){
-            try {
-                autoShoot();
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
+        if (gamepad1.a) {
+            autoShoot();
         }
-
-
         //Telemetria
 
         //Movimento
@@ -94,6 +87,7 @@ public class TeleOpMain extends OpMode {
         telemetry.addData("Ângulo de ajuste", cam.getYaw());
 
     }
+
     public void dpadControl(){
         currentDpadUp = gamepad1.dpad_up;
         currentDpadDown = gamepad1.dpad_down;
@@ -109,24 +103,25 @@ public class TeleOpMain extends OpMode {
         lastDpadDown = currentDpadDown;
         outTake.setPower(flywheelPower);
     }
-    public void autoShoot() throws InterruptedException {
-        while (cam.getDetectionsNumber() == 1) {
-            while (cam.getTagDistanceCentimeters() > 71){
-                drive.setPowers(0.4, 0.4);
-            }
-            drive.stopMotors();
-            if (drive.getPowers().get(0) == 0 && drive.getPowers().get(1) == 0 ){
-                sleep(2000);
-                outTake.setVelocity(1180);
+
+    public void autoShoot(){
+        double flywheelVelocity = 0;
+        double distance = cam.getTagDistanceCentimeters();
+        if (cam.getTagId() == 20){
+            telemetry.addLine("Calculando velocidade...");
+            flywheelVelocity = Math.pow(distance, 1.16) + distance + 1125 + 45*Math.sin(((double) 1 /13)*distance + 8);
+            telemetry.addData("Velocidade Calculada", flywheelVelocity);
+            outTake.setVelocity((int) flywheelVelocity);
+            telemetry.addData("Velocidade da flywheel", outTake.getVelocity());
+
+            if (gamepad1.a){
+                outTake.turnOff();
+                return;
             }
         }
-
-        if (cam.getDetectionsNumber() > 1) {
-            outTake.setVelocity(1180);
-            sleep(3000);
-            outTake.turnOff();
-        }
-
-        drive.stopMotors();
+        return;
     }
+
+
+
 }

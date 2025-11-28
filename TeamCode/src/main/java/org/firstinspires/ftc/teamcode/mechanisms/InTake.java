@@ -4,6 +4,9 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class InTake {
     DcMotor coreHex;
     DcMotor coreHex2;
@@ -32,5 +35,12 @@ public class InTake {
 
         stopMotors();
     }
+    public List<Double> getPowers(){
+        List<Double> powers = new ArrayList<>();
+        powers.add(coreHex.getPower());
+        powers.add(coreHex2.getPower());
+        return powers;
+    }
+
 
 }

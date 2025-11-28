@@ -40,8 +40,13 @@ public class WebCam {
     public double getTagDistanceCentimeters(){
         List<AprilTagDetection> detections = aprilTag.getDetections();
 
-        for (AprilTagDetection tag : detections){
-            return tag.ftcPose.range*2.54;
+        if (!detections.isEmpty()) {
+            for (AprilTagDetection tag : detections) {
+                return tag.ftcPose.range * 2.54;
+
+            }
+        } else {
+            return Double.NaN;
         }
         return Double.NaN;
     }
