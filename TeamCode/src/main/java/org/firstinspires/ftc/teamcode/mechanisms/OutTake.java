@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.mechanisms;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.navigation.CurrentUnit;
@@ -15,6 +16,7 @@ public class OutTake {
         flywheel = (DcMotorEx) hwmap.get(DcMotor.class, "flywheel");
 
         flywheel.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        flywheel.setDirection(DcMotorSimple.Direction.REVERSE);
     }
 
     public double getCurrent(){
