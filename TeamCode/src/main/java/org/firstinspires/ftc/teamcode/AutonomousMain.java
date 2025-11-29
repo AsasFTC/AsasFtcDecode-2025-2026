@@ -4,6 +4,8 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
+import org.firstinspires.ftc.teamcode.mechanisms.Aliance;
+import org.firstinspires.ftc.teamcode.mechanisms.Definicoes;
 import org.firstinspires.ftc.teamcode.mechanisms.InTake;
 import org.firstinspires.ftc.teamcode.mechanisms.OutTake;
 import org.firstinspires.ftc.teamcode.mechanisms.TwoMotorsDrive;
@@ -19,7 +21,7 @@ public class AutonomousMain extends LinearOpMode {
     OutTake outTake;
 
     WebCam cam;
-
+    Aliance aliance;
     enum State{
         IDLE
     }
@@ -43,6 +45,9 @@ public class AutonomousMain extends LinearOpMode {
 
         cam = new WebCam();
         cam.init(hardwareMap);
+
+        aliance = new Aliance();
+        aliance.initCam(hardwareMap);
 
 
         telemetry.addLine("Pronto! Aperte PLAY.");

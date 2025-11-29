@@ -54,7 +54,7 @@ public class TeleOpMain extends OpMode {
         cam = new WebCam();
         cam.init(hardwareMap);
 
-        int direction = 1;
+        int direction = 0;
     }
 
     @Override
@@ -65,13 +65,8 @@ public class TeleOpMain extends OpMode {
         else if (gamepad1.dpad_left) {
             direction = -1;
         }
-
-
         drive.arcadeDrive(gamepad1.left_stick_y * direction, gamepad1.left_stick_x);
-
-
         inTake.setCoreHexPowers(coreHexPower, -coreHex2Power);
-
         dpadControl();
         outTakeTriggerControl();
         coreHexBumperControl();
@@ -117,10 +112,10 @@ public class TeleOpMain extends OpMode {
         lastDpadDown = currentDpadDown;
         outTake.setPower(flywheelPower);
     }
-
     public void autoShoot(){
         double flywheelVelocity = 0;
         double distance = cam.getTagDistanceCentimeters();
+
         while (cam.getTagId() == 20){
             telemetry.addLine("Calculando velocidade...");
             flywheelVelocity = Math.pow(distance, 1.16) + distance + 1080 + 45*Math.sin(((double) 1 /13)*distance + 8);
