@@ -83,48 +83,58 @@ public class AutonomousMainX2 extends LinearOpMode {
             switch (state) {
                 case WALKING:
                     moveForward(-145);
-                    state = State.SHOOTING;
+                    state = AutonomousMainX2.State.SHOOTING;
                     break;
                 case SHOOTING:
                     outTake.setVelocity(1360);
-                    Thread.sleep(1500);
-                    inTake.setCoreHexPowers(0.6, -0.6);
+                    Thread.sleep(3000);
+                    inTake.setCoreHexPowers(0.9, -0.9);
                     Thread.sleep(4000);
+
                     outTake.turnOff();
                     inTake.setCoreHexPowers(0, 0);
                     Thread.sleep(1500);
-                    state = State.TURNING;
+                    state = AutonomousMainX2.State.TURNING;
                     break;
                 case TURNING:
                     rotate(135);
                     Thread.sleep(500);
-                    state = State.GET_ARTIFACTS;
+                    state = AutonomousMainX2.State.GET_ARTIFACTS;
                     break;
                 case GET_ARTIFACTS:
                     inTake.setCoreHexPowers(0.6, 0);
                     moveForward(-104);
                     Thread.sleep(1000);
                     inTake.setCoreHexPowers(0, 0);
-                    state = State.WALKING_BACK_TO_GOAL;
+
+                    state = AutonomousMainX2.State.WALKING_BACK_TO_GOAL;
                     break;
                 case WALKING_BACK_TO_GOAL:
                     moveForward(104); //Anda de volta
-                    state = State.TURN_TO_GOAL;
+                    state = AutonomousMainX2.State.TURN_TO_GOAL;
                     break;
                 case TURN_TO_GOAL:
+
+                    //Sugestão: (com ajuste com ângulo da câmera)
+                    //double anguloAjuste = cam.getYaw();
+                    //while (anguloAjuste != 0){
+                    //    rotate(anguloAjuste);
+                    //    anguloAjuste = cam.getYaw();
+                    //}
+
                     rotate(-135);
                     Thread.sleep(500);
-                    state = State.SHOOTING_ARTIFACTS;
+                    state = AutonomousMainX2.State.SHOOTING_ARTIFACTS;
                     break;
                 case SHOOTING_ARTIFACTS:
                     outTake.setVelocity(1360);
                     Thread.sleep(3000);
-                    inTake.setCoreHexPowers(0.65, -0.65);
+                    inTake.setCoreHexPowers(0.9, -0.9);
                     Thread.sleep(3000);
                     inTake.setCoreHexPowers(0, 0);
                     outTake.turnOff();
                     Thread.sleep(1000);
-                    state = State.FINISHED;
+                    state = AutonomousMainX2.State.FINISHED;
                     break;
                 case FINISHED:
                     requestOpModeStop();

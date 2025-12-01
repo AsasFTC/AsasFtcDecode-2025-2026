@@ -153,8 +153,8 @@ public class TeleOpMain extends OpMode {
         outTake.setPower(flywheelPower);
     }
     public void coreHexBumperControl(){
-        if (gamepad1.right_bumper){ coreHexPower = 0.9;} else {coreHexPower = 0;}
-        if (gamepad1.left_bumper){ coreHex2Power = 0.9;} else {coreHex2Power = 0;}
+        if (gamepad1.right_bumper){ coreHexPower = 0.9 * direction;} else {coreHexPower = 0;}
+        if (gamepad1.left_bumper){ coreHex2Power = 0.9 * direction;} else {coreHex2Power = 0;}
 
 
     }

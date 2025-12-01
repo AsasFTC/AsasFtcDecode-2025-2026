@@ -90,7 +90,7 @@ public class AutonomousMainX1 extends LinearOpMode {
             telemetry.addData("ID da Tag", cam.getTagId());
             telemetry.addData("Distância", cam.getTagDistanceCentimeters());
             telemetry.addData("Ângulo de ajuste", cam.getYaw());
-            telemetry.update();
+
 
 
             //Ações em loop
@@ -101,8 +101,8 @@ public class AutonomousMainX1 extends LinearOpMode {
                     break;
                 case SHOOTING:
                     outTake.setVelocity(1360);
-                    Thread.sleep(1500);
-                    inTake.setCoreHexPowers(0.6, -0.6);
+                    Thread.sleep(3000);
+                    inTake.setCoreHexPowers(1, -1);
                     Thread.sleep(4000);
 
                     outTake.turnOff();
@@ -143,7 +143,7 @@ public class AutonomousMainX1 extends LinearOpMode {
                 case SHOOTING_ARTIFACTS:
                     outTake.setVelocity(1360);
                     Thread.sleep(3000);
-                    inTake.setCoreHexPowers(0.65, -0.65);
+                    inTake.setCoreHexPowers(1, -1);
                     Thread.sleep(3000);
                     inTake.setCoreHexPowers(0, 0);
                     outTake.turnOff();
