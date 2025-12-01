@@ -94,10 +94,9 @@ public class AutonomousMain extends LinearOpMode {
 
 
             //Ações em loop
-            switch (state){
+            switch (state) {
                 case WALKING:
                     moveForward(-145);
-                    //Thread.sleep(1000);
                     state = State.SHOOTING;
                     break;
                 case SHOOTING:
@@ -107,27 +106,25 @@ public class AutonomousMain extends LinearOpMode {
                     Thread.sleep(4000);
 
                     outTake.turnOff();
-                    inTake.setCoreHexPowers(0,0);
+                    inTake.setCoreHexPowers(0, 0);
                     Thread.sleep(1500);
                     state = State.TURNING;
                     break;
                 case TURNING:
                     rotate(-135);
-                    //Ideia: girar pro outro lado e parar de andar pra trás e ao invés disso andar pra frente
                     Thread.sleep(500);
                     state = State.GET_ARTIFACTS;
                     break;
                 case GET_ARTIFACTS:
-                    inTake.setCoreHexPowers(0.6, 0); //Aqui ele gira só o coreHex de baixo (por isso que o outro é zero)
-                    //Nota: Como o coreHex de cima tá do lado oposto ao de baixo, o poder dele precisa ser sempre negativo
-                    moveForward(-98); //Move 50cm pra trás (frente está invertida) (estipulação)
+                    inTake.setCoreHexPowers(0.6, 0);
+                    moveForward(-104);
                     Thread.sleep(1000);
-                    inTake.setCoreHexPowers(0, 0); //Aqui ele gira só o coreHex de baixo (por isso que o outro é zero)
+                    inTake.setCoreHexPowers(0, 0);
 
                     state = State.WALKING_BACK_TO_GOAL;
                     break;
                 case WALKING_BACK_TO_GOAL:
-                    moveForward(98); //Anda de volta
+                    moveForward(104); //Anda de volta
                     state = State.TURN_TO_GOAL;
                     break;
                 case TURN_TO_GOAL:
@@ -139,15 +136,11 @@ public class AutonomousMain extends LinearOpMode {
                     //    anguloAjuste = cam.getYaw();
                     //}
 
-                    rotate(135); //Gira de volta pra onde tava
+                    rotate(135);
                     Thread.sleep(500);
                     state = State.SHOOTING_ARTIFACTS;
                     break;
                 case SHOOTING_ARTIFACTS:
-
-                    //Mesma coisa que o de cima, mas no final ele muda pra FINISHED
-                    //Sugestão:
-                    //Ao invés de outTake.setVelocity(), usar autoShoot()  (isso vai usar minha função de lançamento)
                     outTake.setVelocity(1360);
                     Thread.sleep(3000);
                     inTake.setCoreHexPowers(0.65, -0.65);
@@ -160,9 +153,7 @@ public class AutonomousMain extends LinearOpMode {
                 case FINISHED:
                     requestOpModeStop();
                     return;
-                    //Aqui acabou, não sei exatamente como terminar o loop
             }
-
 
 
         }
