@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
@@ -10,6 +11,7 @@ import org.firstinspires.ftc.teamcode.mechanisms.WebCam;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+@Autonomous
 public class AutonomousMainY1 extends LinearOpMode {
 
     private static final Logger log = LoggerFactory.getLogger(AutonomousMainY1.class);
@@ -80,24 +82,24 @@ public class AutonomousMainY1 extends LinearOpMode {
             //Ações em loop
             switch (state) {
                 case SHOOTING:
-                    outTake.setVelocity(1360);
-                    Thread.sleep(1500);
+                    outTake.setVelocity(1660);
+                    Thread.sleep(3000);
                     inTake.setCoreHexPowers(0.6, -0.6);
-                    Thread.sleep(4000);
+                    Thread.sleep(5500);
 
                     outTake.turnOff();
                     inTake.setCoreHexPowers(0, 0);
-                    Thread.sleep(1500);
+                    Thread.sleep(2000);
                     state = State.WALKING;
                     break;
 
                 case WALKING:
-                    moveForward(-106);
+                    moveForward(50);
                     state = State.TURNING;
                     break;
 
                 case TURNING:
-                    rotate(-135);
+                    rotate(-113);
                     Thread.sleep(500);
                     state = State.GET_ARTIFACTS;
                     break;
@@ -114,8 +116,13 @@ public class AutonomousMainY1 extends LinearOpMode {
                     state = State.TURN_TO_GOAL;
                     break;
                 case TURN_TO_GOAL:
-                    rotate(135);
+                    rotate(113);
                     Thread.sleep(500);
+                    moveForward(-40
+
+
+
+                    );
                     state = State.SHOOTING_ARTIFACTS;
                     break;
                 case SHOOTING_ARTIFACTS:

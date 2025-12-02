@@ -65,7 +65,7 @@ public class TeleOpMain extends OpMode {
         else if (gamepad1.dpad_left) {
             direction = -1;
         }
-        drive.arcadeDrive(gamepad1.left_stick_y * direction, gamepad1.left_stick_x);
+        drive.arcadeDrive(gamepad1.left_stick_y * direction * 0.6, gamepad1.left_stick_x*0.6);
         inTake.setCoreHexPowers(coreHexPower, -coreHex2Power);
         dpadControl();
         outTakeTriggerControl();
@@ -118,7 +118,7 @@ public class TeleOpMain extends OpMode {
 
         while (cam.getTagId() == 20){
             telemetry.addLine("Calculando velocidade...");
-            flywheelVelocity = Math.pow(distance, 1.16) + distance + 1080 + 45*Math.sin(((double) 1 /13)*distance + 8);
+            flywheelVelocity = Math.pow(distance, 1.16) + distance + 780 + 45*Math.sin(((double) 1 /13)*distance + 8);
             telemetry.addData("Velocidade Calculada", flywheelVelocity);
             if (flywheelVelocity <= 2340) {
                 outTake.setVelocity((int) flywheelVelocity);

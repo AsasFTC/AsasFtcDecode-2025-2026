@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
@@ -10,6 +11,7 @@ import org.firstinspires.ftc.teamcode.mechanisms.WebCam;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+@Autonomous
 public class AutonomousMainY2 extends LinearOpMode {
 
     private static final Logger log = LoggerFactory.getLogger(AutonomousMainY2.class);
