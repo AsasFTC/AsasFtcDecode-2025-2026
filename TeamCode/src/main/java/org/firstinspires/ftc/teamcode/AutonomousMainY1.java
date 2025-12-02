@@ -76,25 +76,24 @@ public class AutonomousMainY1 extends LinearOpMode {
             telemetry.addData("ID da Tag", cam.getTagId());
             telemetry.addData("ID da Tag", cam.getTagId());
             telemetry.addData("Distância", cam.getTagDistanceCentimeters());
-            telemetry.addData("Ângulo de ajuste", cam.getYaw());
+            telemetry.addData("Ângulo de ajuste", cam.getAimAngle());
             telemetry.update();
 
             //Ações em loop
             switch (state) {
                 case SHOOTING:
-                    outTake.setVelocity(1660);
-                    Thread.sleep(3000);
-                    inTake.setCoreHexPowers(0.6, -0.6);
+                    outTake.setVelocity(1680);
                     Thread.sleep(5500);
-
+                    inTake.setCoreHexPowers(0.9, -0.9);
+                    Thread.sleep(5500);
                     outTake.turnOff();
                     inTake.setCoreHexPowers(0, 0);
-                    Thread.sleep(2000);
+                    Thread.sleep(3000);
                     state = State.WALKING;
                     break;
 
                 case WALKING:
-                    moveForward(50);
+                    moveForward(54);
                     state = State.TURNING;
                     break;
 
@@ -106,29 +105,27 @@ public class AutonomousMainY1 extends LinearOpMode {
 
                 case GET_ARTIFACTS:
                     inTake.setCoreHexPowers(0.6, 0);
-                    moveForward(-86);
+                    moveForward(-80);
                     Thread.sleep(1000);
                     inTake.setCoreHexPowers(0, 0);
                     state = State.WALKING_BACK_TO_GOAL;
                 break;
                 case WALKING_BACK_TO_GOAL:
-                    moveForward(86);
+                    moveForward(74);
                     state = State.TURN_TO_GOAL;
                     break;
                 case TURN_TO_GOAL:
-                    rotate(113);
+                    rotate(110);
                     Thread.sleep(500);
-                    moveForward(-40
-
-
-
-                    );
+                    moveForward(-43);
+                    telemetry.addData("Ângulo de ajuste pro gol (webcam)", cam.getYaw());
+                    telemetry.update();
                     state = State.SHOOTING_ARTIFACTS;
                     break;
                 case SHOOTING_ARTIFACTS:
-                    outTake.setVelocity(1360);
-                    Thread.sleep(3000);
-                    inTake.setCoreHexPowers(0.65, -0.65);
+                    outTake.setVelocity(1680);
+                    Thread.sleep(4000);
+                    inTake.setCoreHexPowers(0.9, -0.9);
                     Thread.sleep(3000);
                     inTake.setCoreHexPowers(0, 0);
                     outTake.turnOff();
@@ -152,7 +149,7 @@ public class AutonomousMainY1 extends LinearOpMode {
         drive.setMotorModes(DcMotor.RunMode.STOP_AND_RESET_ENCODER, DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         drive.setTargetPositions(targetPulses, targetPulses);
         drive.setMotorModes(DcMotor.RunMode.RUN_TO_POSITION, DcMotor.RunMode.RUN_TO_POSITION);
-        drive.setPowers(0.5, 0.5);
+        drive.setPowers(0.8, 0.8);
 
         while (opModeIsActive() && (drive.leftMotorIsBusy() || drive.rightMotorIsBusy())) {
             telemetry.addData("Posições(E / D)", drive.getPositions().toString());
@@ -169,12 +166,10 @@ public class AutonomousMainY1 extends LinearOpMode {
         drive.setMotorModes(DcMotor.RunMode.STOP_AND_RESET_ENCODER, DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         drive.setTargetPositions(targetPulses, -targetPulses);
         drive.setMotorModes(DcMotor.RunMode.RUN_TO_POSITION, DcMotor.RunMode.RUN_TO_POSITION);
-        drive.setPowers(0.5, 0.5);
+        drive.setPowers(0.8, 0.8);
 
         while (opModeIsActive() && (drive.leftMotorIsBusy() || drive.rightMotorIsBusy())) {
-            telemetry.addData("Alvos(E / D)", "L: " + targetPulses + " | R: " + -targetPulses);
-            telemetry.addData("Posições(E / D)", drive.getPositions().toString());
-            telemetry.update();
+
         }
 
         drive.stopMotors();

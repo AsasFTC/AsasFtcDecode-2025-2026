@@ -93,7 +93,7 @@ public class TeleOpMain extends OpMode {
         telemetry.addData("Tags detectadas", cam.getDetectionsNumber());
         telemetry.addData("ID da Tag", cam.getTagId());
         telemetry.addData("Distância", cam.getTagDistanceCentimeters());
-        telemetry.addData("Ângulo de ajuste", cam.getYaw());
+        telemetry.addData("Ângulo de ajuste", cam.getAimAngle());
 
     }
 
@@ -133,12 +133,26 @@ public class TeleOpMain extends OpMode {
         return;
     }
     public void outTakeTriggerControl(){
+
+
+        // Ideia: Nao usamos potencia muito baixa =>
+        // Criar um range de uso da potencia
+        // Ex: Potencia minima: A potencia para realizar um gol da menor distancia possivel
+        // Ex: Potencia maxima: A potencia necessária para realizar um gol da maior distancia necessário
+        // Criar uma validação de potencia critica, para proteção do motor
+
+
+
+        double trigger = gamepad1.right_trigger;
         if (gamepad1.b) {
             isOuttakeLocked = true;
-            lockedOuttakePower = gamepad1.right_trigger;
+
+            if (trigger > 0.05) {
+                lockedOuttakePower = 0.4 + (trigger * 0.6);
+            } else {
+                lockedOuttakePower = 0;
+            }
         }
-
-
         if (gamepad1.x) {
             isOuttakeLocked = false;
         }
@@ -146,11 +160,18 @@ public class TeleOpMain extends OpMode {
 
         if (isOuttakeLocked) {
             flywheelPower = lockedOuttakePower;
-        } else {
-            flywheelPower = gamepad1.right_trigger;
-        }
 
-        outTake.setPower(flywheelPower);
+        } else {
+            if (trigger > 0.05) {
+                flywheelPower = 0.4 + (trigger * 0.6);
+            } else {
+                flywheelPower = 0;
+            }
+        }
+        double roundedPower = Math.round(flywheelPower*1000.0)/1000.0;
+
+        outTake.setPower(roundedPower);
+
     }
     public void coreHexBumperControl(){
         if (gamepad1.right_bumper){ coreHexPower = 0.9 * direction;} else {coreHexPower = 0;}

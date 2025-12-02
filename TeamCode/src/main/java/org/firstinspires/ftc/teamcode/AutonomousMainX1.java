@@ -89,7 +89,7 @@ public class AutonomousMainX1 extends LinearOpMode {
             telemetry.addData("Tags detectadas", cam.getDetectionsNumber());
             telemetry.addData("ID da Tag", cam.getTagId());
             telemetry.addData("Distância", cam.getTagDistanceCentimeters());
-            telemetry.addData("Ângulo de ajuste", cam.getYaw());
+            telemetry.addData("Ângulo de ajuste", cam.getAimAngle());
 
 
 

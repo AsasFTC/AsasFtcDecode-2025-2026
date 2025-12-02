@@ -64,4 +64,19 @@ public class WebCam {
         List<AprilTagDetection> detections = aprilTag.getDetections();
         return detections.size();
     }
+    public double getAimAngle(){
+        List<AprilTagDetection> detections = aprilTag.getDetections();
+
+        if (!detections.isEmpty()) {
+            for (AprilTagDetection tag : detections) {
+                if(tag != null) {
+                    return Math.atan2(tag.ftcPose.x, tag.ftcPose.z);
+                }
+            }
+        } else {
+            return Double.NaN;
+        }
+        return Double.NaN;
+    }
+
 }
