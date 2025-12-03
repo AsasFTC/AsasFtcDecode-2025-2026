@@ -83,7 +83,7 @@ public class AutonomousMainY1 extends LinearOpMode {
             switch (state) {
                 case SHOOTING:
                     outTake.setVelocity(1680);
-                    Thread.sleep(5500);
+                    Thread.sleep(5000);
                     inTake.setCoreHexPowers(0.9, -0.9);
                     Thread.sleep(5500);
                     outTake.turnOff();

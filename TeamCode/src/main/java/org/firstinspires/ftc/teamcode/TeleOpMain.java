@@ -35,7 +35,7 @@ public class TeleOpMain extends OpMode {
     boolean isOuttakeLocked = false;
     double lockedOuttakePower = 0;
     int direction;
-
+    int coreHexDirection;
 
     @Override
     public void init(){
@@ -55,6 +55,7 @@ public class TeleOpMain extends OpMode {
         cam.init(hardwareMap);
 
         int direction = 0;
+        coreHexDirection = 1;
     }
 
     @Override
@@ -94,6 +95,9 @@ public class TeleOpMain extends OpMode {
         telemetry.addData("ID da Tag", cam.getTagId());
         telemetry.addData("Distância", cam.getTagDistanceCentimeters());
         telemetry.addData("Ângulo de ajuste", cam.getAimAngle());
+
+        //In-take
+        telemetry.addData("Orientação do coreHex", coreHexDirection == 1 ? "Engolir" : "Repelir");
 
     }
 
@@ -174,8 +178,9 @@ public class TeleOpMain extends OpMode {
 
     }
     public void coreHexBumperControl(){
-        if (gamepad1.right_bumper){ coreHexPower = 0.9 * direction;} else {coreHexPower = 0;}
-        if (gamepad1.left_bumper){ coreHex2Power = 0.9 * direction;} else {coreHex2Power = 0;}
+        if (gamepad1.y) {coreHexDirection = -1;} else {coreHexDirection = 1;}
+        if (gamepad1.right_bumper){ coreHexPower = 0.9 * coreHexDirection;} else {coreHexPower = 0;}
+        if (gamepad1.left_bumper){ coreHex2Power = 0.9 * coreHexDirection;} else {coreHex2Power = 0;}
 
 
     }

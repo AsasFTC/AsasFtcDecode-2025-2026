@@ -96,11 +96,11 @@ public class AutonomousMainX1 extends LinearOpMode {
             //Ações em loop
             switch (state) {
                 case WALKING:
-                    moveForward(-145);
+                    moveForward(-143);
                     state = State.SHOOTING;
                     break;
                 case SHOOTING:
-                    outTake.setVelocity(1360);
+                    outTake.setVelocity(1320);
                     Thread.sleep(3000);
                     inTake.setCoreHexPowers(1, -1);
                     Thread.sleep(4000);
@@ -111,7 +111,7 @@ public class AutonomousMainX1 extends LinearOpMode {
                     state = State.TURNING;
                     break;
                 case TURNING:
-                    rotate(-135);
+                    rotate(-138);
                     Thread.sleep(500);
                     state = State.GET_ARTIFACTS;
                     break;
@@ -141,7 +141,7 @@ public class AutonomousMainX1 extends LinearOpMode {
                     state = State.SHOOTING_ARTIFACTS;
                     break;
                 case SHOOTING_ARTIFACTS:
-                    outTake.setVelocity(1360);
+                    outTake.setVelocity(1320);
                     Thread.sleep(3000);
                     inTake.setCoreHexPowers(1, -1);
                     Thread.sleep(3000);
