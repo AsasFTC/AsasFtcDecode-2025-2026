@@ -100,10 +100,14 @@ public class AutonomousMainX1 extends LinearOpMode {
                     state = State.SHOOTING;
                     break;
                 case SHOOTING:
-                    outTake.setVelocity(1320);
-                    Thread.sleep(3000);
-                    inTake.setCoreHexPowers(1, -1);
+                    outTake.setVelocity(1380);
                     Thread.sleep(4000);
+                    inTake.setCoreHexPowers(1, -1);
+                    Thread.sleep(1000);
+                    inTake.setCoreHexPowers(0, 0);
+                    Thread.sleep(1000);
+                    inTake.setCoreHexPowers(1, -1);
+                    Thread.sleep(1000);
 
                     outTake.turnOff();
                     inTake.setCoreHexPowers(0, 0);
@@ -141,10 +145,10 @@ public class AutonomousMainX1 extends LinearOpMode {
                     state = State.SHOOTING_ARTIFACTS;
                     break;
                 case SHOOTING_ARTIFACTS:
-                    outTake.setVelocity(1320);
-                    Thread.sleep(3000);
+                    outTake.setVelocity(1390);
+                    Thread.sleep(4000);
                     inTake.setCoreHexPowers(1, -1);
-                    Thread.sleep(3000);
+                    Thread.sleep(2000);
                     inTake.setCoreHexPowers(0, 0);
                     outTake.turnOff();
                     Thread.sleep(1000);
@@ -180,7 +184,7 @@ public class AutonomousMainX1 extends LinearOpMode {
         drive.setMotorModes(DcMotor.RunMode.RUN_TO_POSITION, DcMotor.RunMode.RUN_TO_POSITION);
 
         // Velocidade de movimento (0 a 1)
-        drive.setPowers(0.5, 0.5);
+        drive.setPowers(0.7, 0.7);
 
         // -------------------------
         // LOOP DE MOVIMENTO (bloqueante)

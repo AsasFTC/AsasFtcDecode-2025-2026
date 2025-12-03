@@ -84,8 +84,8 @@ public class AutonomousMainY2 extends LinearOpMode {
             //Ações em loop
             switch (state) {
                 case SHOOTING:
-                    outTake.setVelocity(1680);
-                    Thread.sleep(5500);
+                    outTake.setVelocity(1720);
+                    Thread.sleep(5000);
                     inTake.setCoreHexPowers(0.9, -0.9);
                     Thread.sleep(5500);
                     outTake.turnOff();
@@ -100,7 +100,7 @@ public class AutonomousMainY2 extends LinearOpMode {
                     break;
 
                 case TURNING:
-                    rotate(-113);
+                    rotate(113);
                     Thread.sleep(500);
                     state = State.GET_ARTIFACTS;
                     break;
@@ -117,7 +117,7 @@ public class AutonomousMainY2 extends LinearOpMode {
                     state = State.TURN_TO_GOAL;
                     break;
                 case TURN_TO_GOAL:
-                    rotate(110);
+                    rotate(-110);
                     Thread.sleep(500);
                     moveForward(-43);
                     telemetry.addData("Ângulo de ajuste pro gol (webcam)", cam.getYaw());
@@ -125,7 +125,7 @@ public class AutonomousMainY2 extends LinearOpMode {
                     state = State.SHOOTING_ARTIFACTS;
                     break;
                 case SHOOTING_ARTIFACTS:
-                    outTake.setVelocity(1680);
+                    outTake.setVelocity(1700);
                     Thread.sleep(4000);
                     inTake.setCoreHexPowers(0.9, -0.9);
                     Thread.sleep(3000);
@@ -168,7 +168,7 @@ public class AutonomousMainY2 extends LinearOpMode {
         drive.setMotorModes(DcMotor.RunMode.STOP_AND_RESET_ENCODER, DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         drive.setTargetPositions(targetPulses, -targetPulses);
         drive.setMotorModes(DcMotor.RunMode.RUN_TO_POSITION, DcMotor.RunMode.RUN_TO_POSITION);
-        drive.setPowers(0.5, 0.5);
+        drive.setPowers(0.8, 0.8);
 
         while (opModeIsActive() && (drive.leftMotorIsBusy() || drive.rightMotorIsBusy())) {
             telemetry.addData("Alvos(E / D)", "L: " + targetPulses + " | R: " + -targetPulses);

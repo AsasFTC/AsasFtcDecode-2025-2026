@@ -82,14 +82,18 @@ public class AutonomousMainX2 extends LinearOpMode {
             //Ações em loop
             switch (state) {
                 case WALKING:
-                    moveForward(-145);
+                    moveForward(-143);
                     state = AutonomousMainX2.State.SHOOTING;
                     break;
                 case SHOOTING:
-                    outTake.setVelocity(1360);
-                    Thread.sleep(3000);
-                    inTake.setCoreHexPowers(0.9, -0.9);
+                    outTake.setVelocity(1380);
                     Thread.sleep(4000);
+                    inTake.setCoreHexPowers(1, -1);
+                    Thread.sleep(1000);
+                    inTake.setCoreHexPowers(0, 0);
+                    Thread.sleep(1000);
+                    inTake.setCoreHexPowers(1, -1);
+                    Thread.sleep(1000);
 
                     outTake.turnOff();
                     inTake.setCoreHexPowers(0, 0);
@@ -97,7 +101,7 @@ public class AutonomousMainX2 extends LinearOpMode {
                     state = AutonomousMainX2.State.TURNING;
                     break;
                 case TURNING:
-                    rotate(135);
+                    rotate(138);
                     Thread.sleep(500);
                     state = AutonomousMainX2.State.GET_ARTIFACTS;
                     break;
@@ -127,10 +131,10 @@ public class AutonomousMainX2 extends LinearOpMode {
                     state = AutonomousMainX2.State.SHOOTING_ARTIFACTS;
                     break;
                 case SHOOTING_ARTIFACTS:
-                    outTake.setVelocity(1360);
-                    Thread.sleep(3000);
-                    inTake.setCoreHexPowers(0.9, -0.9);
-                    Thread.sleep(3000);
+                    outTake.setVelocity(1390);
+                    Thread.sleep(4000);
+                    inTake.setCoreHexPowers(1, -1);
+                    Thread.sleep(2000);
                     inTake.setCoreHexPowers(0, 0);
                     outTake.turnOff();
                     Thread.sleep(1000);
@@ -153,7 +157,7 @@ public class AutonomousMainX2 extends LinearOpMode {
         drive.setMotorModes(DcMotor.RunMode.STOP_AND_RESET_ENCODER, DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         drive.setTargetPositions(targetPulses, targetPulses);
         drive.setMotorModes(DcMotor.RunMode.RUN_TO_POSITION, DcMotor.RunMode.RUN_TO_POSITION);
-        drive.setPowers(0.5, 0.5);
+        drive.setPowers(0.8, 0.8);
 
         while (opModeIsActive() && (drive.leftMotorIsBusy() || drive.rightMotorIsBusy())) {
             telemetry.addData("Posições(E / D)", drive.getPositions().toString());
@@ -170,7 +174,7 @@ public class AutonomousMainX2 extends LinearOpMode {
         drive.setMotorModes(DcMotor.RunMode.STOP_AND_RESET_ENCODER, DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         drive.setTargetPositions(targetPulses, -targetPulses);
         drive.setMotorModes(DcMotor.RunMode.RUN_TO_POSITION, DcMotor.RunMode.RUN_TO_POSITION);
-        drive.setPowers(0.5, 0.5);
+        drive.setPowers(0.8, 0.8);
 
         while (opModeIsActive() && (drive.leftMotorIsBusy() || drive.rightMotorIsBusy())) {
             telemetry.addData("Alvos(E / D)", "L: " + targetPulses + " | R: " + -targetPulses);

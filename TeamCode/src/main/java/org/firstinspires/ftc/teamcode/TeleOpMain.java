@@ -71,6 +71,7 @@ public class TeleOpMain extends OpMode {
         dpadControl();
         outTakeTriggerControl();
         coreHexBumperControl();
+        defaultPowerTriggerControl();
 
         if (gamepad1.a) {
             autoShoot();
@@ -172,6 +173,9 @@ public class TeleOpMain extends OpMode {
                 flywheelPower = 0;
             }
         }
+        if (gamepad1.left_trigger != 0){
+            flywheelPower = 0.460;
+        }
         double roundedPower = Math.round(flywheelPower*1000.0)/1000.0;
 
         outTake.setPower(roundedPower);
@@ -181,8 +185,11 @@ public class TeleOpMain extends OpMode {
         if (gamepad1.y) {coreHexDirection = -1;} else {coreHexDirection = 1;}
         if (gamepad1.right_bumper){ coreHexPower = 0.9 * coreHexDirection;} else {coreHexPower = 0;}
         if (gamepad1.left_bumper){ coreHex2Power = 0.9 * coreHexDirection;} else {coreHex2Power = 0;}
-
-
+    }
+    public void defaultPowerTriggerControl(){
+        if (gamepad1.left_trigger != 0){
+            flywheelPower = 0.543;
+        }
     }
 
 

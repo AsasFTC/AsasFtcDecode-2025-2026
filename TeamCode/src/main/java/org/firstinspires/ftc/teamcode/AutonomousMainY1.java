@@ -82,7 +82,7 @@ public class AutonomousMainY1 extends LinearOpMode {
             //Ações em loop
             switch (state) {
                 case SHOOTING:
-                    outTake.setVelocity(1680);
+                    outTake.setVelocity(1720);
                     Thread.sleep(5000);
                     inTake.setCoreHexPowers(0.9, -0.9);
                     Thread.sleep(5500);
@@ -123,7 +123,7 @@ public class AutonomousMainY1 extends LinearOpMode {
                     state = State.SHOOTING_ARTIFACTS;
                     break;
                 case SHOOTING_ARTIFACTS:
-                    outTake.setVelocity(1680);
+                    outTake.setVelocity(1700);
                     Thread.sleep(4000);
                     inTake.setCoreHexPowers(0.9, -0.9);
                     Thread.sleep(3000);
