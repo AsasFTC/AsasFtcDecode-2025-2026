@@ -10,26 +10,36 @@ import java.util.List;
 public class WebCam {
     private VisionPortal visionPortal;
     private AprilTagProcessor aprilTag;
-
+    private boolean cameraDisponivel = false;
 
     public void init(HardwareMap hwmap){
+        try {
+            WebcamName webcamName = hwmap.get(WebcamName.class, "Webcam 1");
 
-        WebcamName webcamName = hwmap.get(WebcamName.class, "Webcam 1");
+            aprilTag = new AprilTagProcessor.Builder()
+                    .setDrawTagOutline(true)
+                    .setDrawAxes(true)
+                    .setTagFamily(AprilTagProcessor.TagFamily.TAG_36h11)
+                    .build();
 
-        // Inicializa o detector de AprilTags
-        aprilTag = new AprilTagProcessor.Builder()
-                .setDrawTagOutline(true)
-                .setDrawAxes(true)
-                .setTagFamily(AprilTagProcessor.TagFamily.TAG_36h11)
-                .build();
+            visionPortal = new VisionPortal.Builder()
+                    .setCamera(webcamName)
+                    .addProcessor(aprilTag)
+                    .build();
 
-        // Inicializa o VisionPortal com a C920
-        visionPortal = new VisionPortal.Builder()
-                .setCamera(webcamName)
-                .addProcessor(aprilTag)
-                .build();
+            cameraDisponivel = true;
+
+        } catch (Exception e) {
+            cameraDisponivel = false;
+            visionPortal = null;
+            aprilTag = null;
+        }
     }
     public double getTagId(){
+        if (!cameraDisponivel || aprilTag == null) {
+            return Double.NaN;
+        }
+
         List<AprilTagDetection> detections = aprilTag.getDetections();
 
         for (AprilTagDetection tag : detections){
@@ -38,6 +48,9 @@ public class WebCam {
         return Double.NaN;
     }
     public double getTagDistanceCentimeters(){
+        if (!cameraDisponivel || aprilTag == null) {
+            return Double.NaN;
+        }
         List<AprilTagDetection> detections = aprilTag.getDetections();
 
         if (!detections.isEmpty()) {
@@ -52,6 +65,9 @@ public class WebCam {
         return Double.NaN;
     }
     public double getYaw(){
+        if (!cameraDisponivel || aprilTag == null) {
+            return Double.NaN;
+        }
         List<AprilTagDetection> detections = aprilTag.getDetections();
 
         for(AprilTagDetection tag : detections){
@@ -61,10 +77,17 @@ public class WebCam {
     }
 
     public int getDetectionsNumber(){
+        if (!cameraDisponivel || aprilTag == null) {
+            return 0;
+        }
+
         List<AprilTagDetection> detections = aprilTag.getDetections();
         return detections.size();
     }
     public double getAimAngle(){
+        if (!cameraDisponivel || aprilTag == null) {
+            return Double.NaN;
+        }
         List<AprilTagDetection> detections = aprilTag.getDetections();
 
         if (!detections.isEmpty()) {
