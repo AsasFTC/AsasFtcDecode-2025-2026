@@ -7,6 +7,7 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.navigation.CurrentUnit;
+import org.opencv.core.Mat;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +16,9 @@ public class TwoMotorsDrive {
 
     DcMotorEx motorLeft;
     DcMotorEx motorRight;
+    private double leftPowerFiltered = 0;
+    private double rightPowerFiltered = 0;
+    private double maxDelta = 0.05;
 
     public void init(HardwareMap hwmap){
         motorLeft = (DcMotorEx) hwmap.get(DcMotor.class, "leftDrive");
@@ -59,8 +63,20 @@ public class TwoMotorsDrive {
     }
 
     public void arcadeDrive(double forward, double right){
-        motorLeft.setPower(forward - right);
-        motorRight.setPower(forward + right);
+        double leftTarget = forward - right;
+        double rightTarget = forward + right;
+
+        /*
+        leftTarget = Math.max(-1, Math.min(1, leftTarget));
+        rightTarget = Math.max(-1, Math.min(1, rightTarget));
+
+        leftPowerFiltered = applySlewRate(leftPowerFiltered, leftTarget);
+        rightPowerFiltered = applySlewRate(rightPowerFiltered, rightTarget);
+
+
+         */
+        motorLeft.setPower(leftTarget);
+        motorRight.setPower(rightTarget);
     }
 
     public List<Integer> getPositions(){
@@ -76,5 +92,18 @@ public class TwoMotorsDrive {
     public boolean leftMotorIsBusy(){
         return motorLeft.isBusy();
     }
+    /*
+    public void setMaxDelta(double newDelta){
+        this.maxDelta = newDelta;
+    }
+    private double applySlewRate(double current, double target){
+        double delta = target - current;
+        if (Math.abs(delta) > maxDelta){
+            Math.copySign(maxDelta, delta);
+        }
+        return current + delta;
+    }
+
+     */
 
 }

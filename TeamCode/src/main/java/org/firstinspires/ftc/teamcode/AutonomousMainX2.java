@@ -82,12 +82,12 @@ public class AutonomousMainX2 extends LinearOpMode {
             //Ações em loop
             switch (state) {
                 case WALKING:
-                    moveForward(-143);
+                    moveForward(-100);
                     state = AutonomousMainX2.State.SHOOTING;
                     break;
                 case SHOOTING:
-                    outTake.setVelocity(1380);
-                    Thread.sleep(4000);
+                    outTake.setPower(0.497);
+                    Thread.sleep(5000);
                     inTake.setCoreHexPowers(1, -1);
                     Thread.sleep(1000);
                     inTake.setCoreHexPowers(0, 0);
@@ -101,7 +101,7 @@ public class AutonomousMainX2 extends LinearOpMode {
                     state = AutonomousMainX2.State.TURNING;
                     break;
                 case TURNING:
-                    rotate(138);
+                    rotate(110);
                     Thread.sleep(500);
                     state = AutonomousMainX2.State.GET_ARTIFACTS;
                     break;
@@ -126,13 +126,13 @@ public class AutonomousMainX2 extends LinearOpMode {
                     //    anguloAjuste = cam.getYaw();
                     //}
 
-                    rotate(-135);
+                    rotate(-110);
                     Thread.sleep(500);
                     state = AutonomousMainX2.State.SHOOTING_ARTIFACTS;
                     break;
                 case SHOOTING_ARTIFACTS:
-                    outTake.setVelocity(1390);
-                    Thread.sleep(4000);
+                    outTake.setPower(0.5);
+                    Thread.sleep(5000);
                     inTake.setCoreHexPowers(1, -1);
                     Thread.sleep(2000);
                     inTake.setCoreHexPowers(0, 0);

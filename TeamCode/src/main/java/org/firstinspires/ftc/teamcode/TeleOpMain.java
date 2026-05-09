@@ -66,7 +66,7 @@ public class TeleOpMain extends OpMode {
         else if (gamepad1.dpad_left) {
             direction = -1;
         }
-        drive.arcadeDrive(gamepad1.left_stick_y * direction * 0.6, gamepad1.left_stick_x*0.6);
+        drive.arcadeDrive(gamepad1.left_stick_y * direction * 0.75, gamepad1.left_stick_x*0.75);
         inTake.setCoreHexPowers(coreHexPower, -coreHex2Power);
         dpadControl();
         outTakeTriggerControl();
@@ -103,19 +103,7 @@ public class TeleOpMain extends OpMode {
     }
 
     public void dpadControl(){
-        currentDpadUp = gamepad1.dpad_up;
-        currentDpadDown = gamepad1.dpad_down;
 
-        if (currentDpadUp && !lastDpadUp){
-            flywheelPower += 0.01;
-        }
-        lastDpadUp = currentDpadUp;
-
-        if (currentDpadDown && !lastDpadDown){
-            flywheelPower -= 0.01;
-        }
-        lastDpadDown = currentDpadDown;
-        outTake.setPower(flywheelPower);
     }
     public void autoShoot(){
         double flywheelVelocity = 0;
@@ -176,6 +164,10 @@ public class TeleOpMain extends OpMode {
         if (gamepad1.left_trigger != 0){
             flywheelPower = 0.460;
         }
+        if (gamepad1.dpad_up){
+            flywheelPower = 0.748;
+        }
+
         double roundedPower = Math.round(flywheelPower*1000.0)/1000.0;
 
         outTake.setPower(roundedPower);

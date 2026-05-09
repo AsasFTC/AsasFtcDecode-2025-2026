@@ -62,6 +62,7 @@ public class AutonomousMainY2 extends LinearOpMode {
         if (isStopRequested()) return;
         telemetry.addLine("Rodando...");
         telemetry.update();
+        rotate(cam.getAimAngle());
 
         //Início do processo
         while (opModeIsActive()) {
@@ -84,10 +85,14 @@ public class AutonomousMainY2 extends LinearOpMode {
             //Ações em loop
             switch (state) {
                 case SHOOTING:
-                    outTake.setVelocity(1720);
+                    outTake.setPower(0.6899);
                     Thread.sleep(5000);
                     inTake.setCoreHexPowers(0.9, -0.9);
-                    Thread.sleep(5500);
+                    Thread.sleep(1000);
+                    inTake.stopMotors();
+                    Thread.sleep(200);
+                    inTake.setCoreHexPowers(0.9, -0.9);
+                    Thread.sleep(2000);
                     outTake.turnOff();
                     inTake.setCoreHexPowers(0, 0);
                     Thread.sleep(3000);
@@ -100,24 +105,24 @@ public class AutonomousMainY2 extends LinearOpMode {
                     break;
 
                 case TURNING:
-                    rotate(113);
+                    rotate(119);
                     Thread.sleep(500);
                     state = State.GET_ARTIFACTS;
                     break;
 
                 case GET_ARTIFACTS:
-                    inTake.setCoreHexPowers(0.6, 0);
-                    moveForward(-80);
+                    inTake.setCoreHexPowers(1, 0);
+                    moveForward(-83);
                     Thread.sleep(1000);
                     inTake.setCoreHexPowers(0, 0);
                     state = State.WALKING_BACK_TO_GOAL;
                     break;
                 case WALKING_BACK_TO_GOAL:
-                    moveForward(74);
+                    moveForward(83);
                     state = State.TURN_TO_GOAL;
                     break;
                 case TURN_TO_GOAL:
-                    rotate(-110);
+                    rotate(-118.5);
                     Thread.sleep(500);
                     moveForward(-43);
                     telemetry.addData("Ângulo de ajuste pro gol (webcam)", cam.getYaw());
@@ -125,12 +130,13 @@ public class AutonomousMainY2 extends LinearOpMode {
                     state = State.SHOOTING_ARTIFACTS;
                     break;
                 case SHOOTING_ARTIFACTS:
-                    outTake.setVelocity(1700);
-                    Thread.sleep(4000);
+                    outTake.setPower(0.67);
+                    Thread.sleep(1500);
                     inTake.setCoreHexPowers(0.9, -0.9);
                     Thread.sleep(3000);
                     inTake.setCoreHexPowers(0, 0);
                     outTake.turnOff();
+                    moveForward(42);
                     Thread.sleep(1000);
                     state = State.FINISHED;
                     break;
@@ -151,7 +157,7 @@ public class AutonomousMainY2 extends LinearOpMode {
         drive.setMotorModes(DcMotor.RunMode.STOP_AND_RESET_ENCODER, DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         drive.setTargetPositions(targetPulses, targetPulses);
         drive.setMotorModes(DcMotor.RunMode.RUN_TO_POSITION, DcMotor.RunMode.RUN_TO_POSITION);
-        drive.setPowers(0.5, 0.5);
+        drive.setPowers(0.8, 0.8);
 
         while (opModeIsActive() && (drive.leftMotorIsBusy() || drive.rightMotorIsBusy())) {
             telemetry.addData("Posições(E / D)", drive.getPositions().toString());
